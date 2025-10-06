@@ -11,10 +11,12 @@ const addBook = (e) => {
   const titleValue = e.target.title.value;
   const authorValue = e.target.author.value;
   const pagesValue = e.target.pages.value;
+  const didRead = e.target.isRead.value == "yes" ? true : false;
+  //book buttons toggle read
   const optionsValue =
     e.target.isRead.value == "yes" ? "Read Already" : "Haven't Read It";
 
-  const book = new Book(titleValue, authorValue, pagesValue, optionsValue);
+  const book = new Book(titleValue, authorValue, pagesValue, didRead);
   booksArray.push(book);
 
   renderBook(book);
@@ -27,6 +29,10 @@ const renderBook = (book) => {
   deleteBtn.textContent = "Delete Book";
   deleteBtn.id = "delete";
 
+  const toggleReadBtn = document.createElement("button");
+  toggleReadBtn.textContent = book.read ? "Didn't read" : "Yes readed";
+  toggleReadBtn.id = "toggleRead";
+
   const titleDiv = document.createElement("h1");
   const authorDiv = document.createElement("p");
   const pagesDiv = document.createElement("p");
@@ -34,12 +40,19 @@ const renderBook = (book) => {
 
   titleDiv.textContent = book.title;
   authorDiv.textContent = book.author;
-  pagesDiv.textContent = book.pages;
-  readDiv.textContent = book.optionsValue;
+  pagesDiv.textContent = book.pages + " pages";
+  readDiv.textContent = book.read ? "Yes, readed" : "nah, not";
 
   bookDiv.className = "book";
 
-  const childArr = [titleDiv, authorDiv, pagesDiv, readDiv, deleteBtn];
+  const childArr = [
+    titleDiv,
+    authorDiv,
+    pagesDiv,
+    readDiv,
+    deleteBtn,
+    toggleReadBtn,
+  ];
 
   for (const child of childArr) {
     bookDiv.appendChild(child);
@@ -49,6 +62,18 @@ const renderBook = (book) => {
 
   deleteBtn.addEventListener("click", (e) => {
     deleteBtn.parentElement.remove();
+  });
+
+  toggleReadBtn.addEventListener("click", (e) => {
+    if (book.read === true) {
+      book.read = false;
+      readDiv.textContent = book.read ? "Yes, readed" : "nah, not";
+      toggleReadBtn.textContent = book.read ? "Didn't read" : "Yes readed";
+    } else if (book.read === false) {
+      book.read = true;
+      readDiv.textContent = book.read ? "Yes, readed" : "nah, not";
+      toggleReadBtn.textContent = book.read ? "Didn't read" : "Yes readed";
+    }
   });
 };
 
