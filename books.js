@@ -1,8 +1,63 @@
+const form = document.querySelector("form");
+const box = document.getElementById("box");
+const toggeDialog = document.getElementById("toggleDialog");
+const dialog = document.querySelector("dialog");
+
+const booksArray = [];
+
+const addBook = (e) => {
+  e.preventDefault();
+
+  const titleValue = e.target.title.value;
+  const authorValue = e.target.author.value;
+  const pagesValue = e.target.pages.value;
+  const optionsValue =
+    e.target.isRead.value == "yes" ? "Read Already" : "Haven't Read It";
+
+  const book = new Book(titleValue, authorValue, pagesValue, optionsValue);
+  booksArray.push(book);
+
+  renderBook(book);
+};
+
+const renderBook = (book) => {
+  const bookDiv = document.createElement("div");
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete Book";
+  deleteBtn.id = "delete";
+
+  const titleDiv = document.createElement("h1");
+  const authorDiv = document.createElement("p");
+  const pagesDiv = document.createElement("p");
+  const readDiv = document.createElement("p");
+
+  titleDiv.textContent = book.title;
+  authorDiv.textContent = book.author;
+  pagesDiv.textContent = book.pages;
+  readDiv.textContent = book.optionsValue;
+
+  bookDiv.className = "book";
+
+  const childArr = [titleDiv, authorDiv, pagesDiv, readDiv, deleteBtn];
+
+  for (const child of childArr) {
+    bookDiv.appendChild(child);
+  }
+
+  box.appendChild(bookDiv);
+
+  deleteBtn.addEventListener("click", (e) => {
+    deleteBtn.parentElement.remove();
+  });
+};
+
+//Book constructor
 function Book(title, author, pages, read) {
   if (!new.target) {
     throw Error("Use operator new to make the object dumbass");
   }
-
+  this.id == crypto.randomUUID();
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -14,3 +69,8 @@ function Book(title, author, pages, read) {
     }.`;
   };
 }
+
+form.addEventListener("submit", addBook);
+toggeDialog.addEventListener("click", (e) => {
+  dialog.toggleAttribute("open");
+});

@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  height: 1vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.book {
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+}
+
+dialog {
+  width: 250px;
+  margin: 60px auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  button {
+    width: 100px;
+    background-color: rgb(24, 229, 24);
+    margin: 5px;
+  }
+
+  input {
+    width: 200px;
+  }
+}
+
+#toggleDialog {
+  width: 150px;
+  padding: 10px;
+  margin: 10px auto;
+}
+
+.box {
+  margin: 50px;
+  display: flex;
+  flex-wrap: wrap;
+}
